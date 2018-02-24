@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Aug 30, 2017 1:08:21 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="db.Radarskicentri" table="radarskicentri" catalog="letovi" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="grad" type="string">
+            <column name="grad" length="100" not-null="true" />
+        </property>
+        <property name="zemlja" type="string">
+            <column name="zemlja" length="100" not-null="true" />
+        </property>
+        <property name="duzina" type="big_decimal">
+            <column name="duzina" precision="8" scale="6" not-null="true" />
+        </property>
+        <property name="sirina" type="big_decimal">
+            <column name="sirina" precision="8" scale="6" not-null="true" />
+        </property>
+        <set name="letoviradaris" table="letoviradari" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idradara" not-null="true" />
+            </key>
+            <one-to-many class="db.Letoviradari" />
+        </set>
+    </class>
+</hibernate-mapping>

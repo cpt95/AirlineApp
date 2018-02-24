@@ -1,0 +1,39 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Company</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="master.xhtml">
+            <ui:define name="content">
+                <h:form id="formA">
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <h:outputLabel for="naziv" value="Name:" />
+                        <p:inputText id="naziv" value="#{adctrl.naziv}" label="naziv">
+                            <f:ajax listener="#{adctrl.nameC}"/>
+                        </p:inputText>
+
+                        <h:outputLabel for="adresa" value="Adress:" />
+                        <p:inputText id="adresa" value="#{adctrl.adr}" label="adresa" />
+
+                        <h:outputLabel for="zem" value="Country:" />
+                        <p:inputText id="zem" value="#{adctrl.zemlj}" label="zem" />
+
+                        <h:outputLabel for="web" value="Web adress:" />
+                        <p:inputText id="web" value="#{adctrl.web}" label="web" />
+
+                        <h:outputLabel for="email" value="E-mail:" />
+                        <p:inputText id="email" value="#{adctrl.email}" label="email" />
+                    </h:panelGrid>
+                    <p:commandButton value="Submit" action="#{adctrl.submit2}" />
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

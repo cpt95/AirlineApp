@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Aug 30, 2017 1:08:21 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="db.Licence" table="licence" catalog="letovi" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="korisnici" class="db.Korisnici" fetch="select">
+            <column name="idKorisnika" length="100" not-null="true" />
+        </many-to-one>
+        <property name="lic" type="string">
+            <column name="lic" length="100" not-null="true" />
+        </property>
+        <property name="tip" type="string">
+            <column name="tip" length="100" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

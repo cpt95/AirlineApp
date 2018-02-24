@@ -1,0 +1,63 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Sign Up</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="./master.xhtml">
+            <ui:define name="content">
+                <h:form id="forma">
+                    <br></br>
+
+                    <h:panelGrid id="grid" columns="2" cellpadding="5">
+                        <p:message for="date" />
+                        <h:outputText value="#{reg.birth}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+                        <h:outputLabel for="name" value="Name:" />
+                        <p:inputText id="name" value="#{reg.name}" label="name" />
+                        <h:outputLabel for="surname" value="Surname:" />
+                        <p:inputText id="surname" value="#{reg.sname}" label="surname" />
+                        <h:outputLabel for="sex" value="Sex:" />
+                        <p:inputText id="sex" value="#{reg.sex}" label="sex" />
+
+                        <h:outputLabel for="date" value="Date"/>                 
+                        <p:inputText id="date" value="#{reg.birth}" label="Date">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                            <f:validator validatorId="ageValidator"/>
+                        </p:inputText>
+
+
+                        <h:outputLabel for="email" value="E-mail:" />
+                        <p:inputText id="email" value="#{reg.email}" label="email" />
+
+                        <p:outputLabel for="komp" value="Avio-kompanija: " />
+                        <p:selectOneMenu id="komp" value="#{reg.komp}" style="width:125px">
+                            <f:selectItem itemLabel="Air Serbia" itemValue="1" />
+                            <f:selectItem itemLabel="Lufthansa" itemValue="2" />
+                            <f:selectItem itemLabel="Qatar Airways" itemValue="3" />
+                            <f:selectItem itemLabel="Air France" itemValue="4" />
+                            <f:selectItem itemLabel="Turkish Airlines" itemValue="5" />
+                            <f:selectItem itemLabel="Etihad Airways" itemValue="6" />
+                        </p:selectOneMenu>
+
+                        <h:outputLabel for="usr" value="Username" />
+                        <p:inputText id="usr" value="#{reg.usr}" label="username" />
+                        <h:outputLabel for="pass" value="Password:" />
+                        <p:inputText id="pass" value="#{reg.pass}" label="Password" />
+                        <h:outputLabel for="cpass" value="Confirm password:" />
+                        <p:inputText id="cpass" value="#{reg.cpass}" label="conpassword" />
+
+                        <p:commandButton update="grid" value="Login" validateClient="true" action="#{reg.register()}"/>
+                    </h:panelGrid>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

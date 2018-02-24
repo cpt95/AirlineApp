@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <f:view>
+        <h:head>
+            <title>Flight Details</title>
+            <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBX29o1xAODPJl5JyXoTX6YcIalhEnGmdc&amp;callback=initMap"
+            type="text/javascript"></script>
+        </h:head>
+
+        <h:body>
+            <ui:composition template="master.xhtml">
+                <ui:define name="content">
+                    <center>
+                        <h:form>
+                            <br></br>   
+                            <h:panelGrid columns="2" cellpadding="5">
+                                <h:outputLabel value="Flight path:" />
+                                <h:outputLabel value="#{wctrl.w.naziv}" />
+
+                                <h:outputLabel value="Departure time:" />
+                                <h:outputLabel value="#{wctrl.w.vreme}" />
+
+                                <h:outputLabel value="Flight status:" />
+                                <h:outputLabel value="#{wctrl.w.status}" />
+                                <p:commandButton value="Back" action="#{wctrl.back}"/>
+                            </h:panelGrid>
+                        </h:form>
+                        <h:form rendered="#{wctrl.w.status == 'emg'}">
+                            <h:outputLabel value="Emergency landed at :" />
+                            <h:outputLabel value="#{wctrl.w.urgA}" />
+
+                            <h:outputLabel value="Landing time:" />
+                            <h:outputLabel value="#{wctrl.w.urgVreme}" />
+                        </h:form>
+                        <h:form rendered="#{wctrl.w.status == 'lended'}">
+                            <h:outputLabel value="Landing time:" />
+                            <h:outputLabel value="#{wctrl.w.ldVreme}" />
+                        </h:form>
+
+                        <f:view contentType="text/html">
+                            <h:form id="form">
+                                <p:gmap center="41.910180, 25.070679" zoom="4" type="HYBRID" style="width:800px;height:500px"  model="#{wctrl.polylineModel}" />
+                                <br></br>
+                                <p:dataTable id="res" var="x" value="#{wctrl.lrl}" style="width: 20%">
+                                    <p:column headerText="Speed change [km/h]:">
+                                        <h:outputText value="#{x.brzina}" />
+                                    </p:column>
+
+                                    <p:column headerText="Remaining distance change [km]">
+                                        <h:outputText value="#{x.ostatak}" />
+                                    </p:column>
+
+                                </p:dataTable>
+                            </h:form>
+                        </f:view>
+                    </center>
+                </ui:define>
+            </ui:composition>
+        </h:body>
+    </f:view>
+</html>
+

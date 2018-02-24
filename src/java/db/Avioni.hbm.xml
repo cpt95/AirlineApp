@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Aug 30, 2017 1:08:21 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="db.Avioni" table="avioni" catalog="letovi" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="avioKompanijeByIznajmljen" class="db.AvioKompanije" fetch="select">
+            <column name="iznajmljen" />
+        </many-to-one>
+        <many-to-one name="avioKompanijeByIdKompanije" class="db.AvioKompanije" fetch="select">
+            <column name="idKompanije" />
+        </many-to-one>
+        <many-to-one name="proizvodjaci" class="db.Proizvodjaci" fetch="select">
+            <column name="proizvodjac" not-null="true" />
+        </many-to-one>
+        <property name="naziv" type="string">
+            <column name="naziv" length="100" not-null="true" />
+        </property>
+        <property name="tipAviona" type="string">
+            <column name="tipAviona" length="100" not-null="true" />
+        </property>
+        <property name="maxPutnika" type="int">
+            <column name="maxPutnika" not-null="true" />
+        </property>
+        <property name="licenca" type="string">
+            <column name="licenca" length="100" not-null="true" />
+        </property>
+        <property name="image" type="binary">
+            <column name="image" not-null="true" />
+        </property>
+        <set name="iznajmljivanjes" table="iznajmljivanje" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idAviona" not-null="true" />
+            </key>
+            <one-to-many class="db.Iznajmljivanje" />
+        </set>
+        <set name="letovis" table="letovi" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idAviona" not-null="true" />
+            </key>
+            <one-to-many class="db.Letovi" />
+        </set>
+    </class>
+</hibernate-mapping>

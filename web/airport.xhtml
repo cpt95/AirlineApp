@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Add airport</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="master.xhtml">
+            <ui:define name="content">
+                <h:form id="formX">
+                    <h:panelGrid columns="2" cellpadding="5">
+                        <h:outputLabel for="iata" value="IATA:" />
+                        <p:inputText id="iata" value="#{adctrl.iata}" label="iata" />
+
+                        <h:outputLabel for="naziv" value="Name:" />
+                        <p:inputText id="naziv" value="#{adctrl.name}" label="naziv" />
+
+                        <h:outputLabel for="grad" value="City:" />
+                        <p:inputText id="grad" value="#{adctrl.grad}" label="grad" />
+
+                        <h:outputLabel for="zem" value="Country:" />
+                        <p:inputText id="zem" value="#{adctrl.zem}" label="zem" />
+                        
+                        <h:outputLabel for="lat" value="Latitude:" />
+                        <p:inputNumber id="lat" value="#{adctrl.lat}" label="lat" />
+                        
+                        <h:outputLabel for="long" value="Longitude:" />
+                        <p:inputNumber id="long" value="#{adctrl.lng}" label="long" />
+
+                        <h:outputLabel for="piste" value="Number of runways:" />
+                        <p:inputNumber id="piste" value="#{adctrl.pist}" label="piste"/>
+
+                        <h:outputLabel for="term" value="Number of terminals:" />
+                        <p:inputNumber id="term" value="#{adctrl.term}" label="term">
+                            <f:ajax listener="#{adctrl.termC}"/>
+                        </p:inputNumber>
+                    </h:panelGrid>
+                    <h:panelGrid id="itms" columns="1" cellpadding="5">
+                        <ui:repeat value="#{adctrl.items}" var="item">
+                            <h:outputLabel value="Terminal #{item.id + 1}: "/>
+                            <p:inputText value="#{item.gejtovi}" /><br/><br/>
+                        </ui:repeat>
+                    </h:panelGrid>
+                    <p:commandButton value="Submit" action="#{adctrl.submit}" />
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

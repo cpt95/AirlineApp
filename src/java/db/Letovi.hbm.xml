@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Aug 30, 2017 1:08:21 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="db.Letovi" table="letovi" catalog="letovi" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="avioni" class="db.Avioni" fetch="select">
+            <column name="idAviona" not-null="true" />
+        </many-to-one>
+        <many-to-one name="gejtoviiterminaliByArrgejt" class="db.Gejtoviiterminali" fetch="select">
+            <column name="arrgejt" length="100" not-null="true" />
+        </many-to-one>
+        <many-to-one name="gejtoviiterminaliByUrggejt" class="db.Gejtoviiterminali" fetch="select">
+            <column name="urggejt" length="100" />
+        </many-to-one>
+        <many-to-one name="gejtoviiterminaliByDepgejt" class="db.Gejtoviiterminali" fetch="select">
+            <column name="depgejt" length="100" not-null="true" />
+        </many-to-one>
+        <property name="trajanjeLeta" type="int">
+            <column name="trajanjeLeta" not-null="true" />
+        </property>
+        <property name="vremePoletanja" type="timestamp">
+            <column name="vremePoletanja" length="19" not-null="true" />
+        </property>
+        <property name="planiranoVreme" type="timestamp">
+            <column name="planiranoVreme" length="19" not-null="true" />
+        </property>
+        <property name="ocekivanoVreme" type="timestamp">
+            <column name="ocekivanoVreme" length="19" not-null="true" />
+        </property>
+        <property name="vremeSletanja" type="timestamp">
+            <column name="vremeSletanja" length="19" />
+        </property>
+        <property name="status" type="string">
+            <column name="status" length="100" not-null="true" />
+        </property>
+        <set name="osobljeletas" table="osobljeleta" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idLeta" not-null="true" />
+            </key>
+            <one-to-many class="db.Osobljeleta" />
+        </set>
+        <set name="letoviradaris" table="letoviradari" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idleta" not-null="true" />
+            </key>
+            <one-to-many class="db.Letoviradari" />
+        </set>
+    </class>
+</hibernate-mapping>

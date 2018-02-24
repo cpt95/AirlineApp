@@ -1,0 +1,71 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Guest</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="master.xhtml">
+            <ui:define name="content">
+                <h:form>
+                    <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+                        <p:outputLabel for="console" value="Return flight:" />
+                        <p:selectOneRadio id="console" value="#{gctrl.radio}">
+                            <f:selectItem itemLabel="Yes" itemValue="tw" />
+                            <f:selectItem itemLabel="No" itemValue="ow" />
+                            <p:ajax update="return"/>
+                        </p:selectOneRadio>
+                        <h:outputLabel for="from" value="From:" />
+                        <p:selectOneMenu id="from" value="#{gctrl.frmA}">
+                            <f:selectItems value="#{airports}"/>
+                        </p:selectOneMenu>
+                        <h:outputLabel for="to" value="To:" />
+                        <p:selectOneMenu id="to" value="#{gctrl.toA}">
+                            <f:selectItems value="#{airports}"/>
+                        </p:selectOneMenu>
+
+                        <p:outputLabel for="depart" value="Departing:" />
+                        <p:calendar id="depart" value="#{gctrl.dep}" />
+
+                        <p:outputLabel for="return" value="Returning:" />
+                        <p:calendar id="return" disabled="#{gctrl.radio == 'ow'}" value="#{gctrl.ret}" />
+
+                        <p:outputLabel for="adults" value="Adults:"/>
+                        <p:inputNumber id="adults" value="#{gctrl.adult}" minValue="1" maxValue="8"/>
+
+                        <p:outputLabel for="direct" value="Direct flight:"/>
+                        <p:selectBooleanCheckbox id="direct" value="#{gctrl.direct}" />
+
+                        <p:commandButton value="Search" actionListener="#{gctrl.srch}" update="rsf" />
+                    </h:panelGrid>
+                    <h:panelGroup id="rsf">
+                        <p:dataTable id="res" rendered="#{gctrl.show}" var="x" value="#{gctrl.src}">
+                            <p:column headerText="Flight">
+                                <h:outputText value="#{x.name}" />
+                            </p:column>
+
+                            <p:column headerText="Duration">
+                                <h:outputText value="#{x.t}" />
+                            </p:column>
+
+                            <p:column headerText="Seats remaining">
+                                <h:outputText value="#{x.c}" />
+                            </p:column>
+
+                            <p:column headerText="Reserve">
+                                <center>
+                                    <p:commandButton value="Reserve" action="#{gctrl.res(x)}"/>
+                                </center>
+                            </p:column>
+                        </p:dataTable>
+                    </h:panelGroup>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

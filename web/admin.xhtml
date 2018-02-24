@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Administrator</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="master.xhtml">
+            <ui:define name="content">
+                <center>
+                    <h:form id="formA">
+                        <p:dataTable id="basicDT" var="g" value="#{kor}">
+                            <p:column headerText="Ime" style="text-align: center">
+                                <h:outputText value="#{g.ime}" />
+                            </p:column>
+                            <p:column headerText="Prezime" style="text-align: center">
+                                <h:outputText value="#{g.prezime}" />
+                            </p:column>
+                            <p:column headerText="E-mail" style="text-align: center">
+                                <h:outputText value="#{g.email}" />
+                            </p:column>
+                            <p:column headerText="Pozicija" style="text-align: center">
+                                <h:outputText value="#{g.pozicija}" />
+                            </p:column>
+                            <p:column style="text-align: center">
+                                <p:commandButton value="Approve" action="#{adctrl.approve()}">
+                                    <f:setPropertyActionListener value="#{g}" target="#{adctrl.selectedG}" />
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable><br/>
+                        <h:panelGrid columns="1" cellpadding="5">
+                            <p:commandButton value="Add new airport" action="#{adctrl.addA()}" style="width:199px"/>
+                            <p:commandButton value="Add/change an airliner" action="#{adctrl.addAr()}"/>
+                            <p:commandButton value="Asign license to pilot" action="#{adctrl.addAl()}" style="width:199px"/>
+                            <p:commandButton value="Add new aircraft" action="#{adctrl.addAc()}" style="width:199px"/>
+                            <p:commandButton value="Add new flight" action="#{adctrl.addAf()}" style="width:199px"/>
+                        </h:panelGrid>
+                    </h:form>
+                </center>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

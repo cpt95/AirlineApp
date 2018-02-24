@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:o="http://omnifaces.org/ui">
+    <h:head>
+        <title>Worker</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="master.xhtml">
+            <ui:define name="content">
+                <h:form id="form" prependId="false">
+                    <center>
+                        <p:dataTable id="FlightsDT" var="flight" value="#{work}" selectionMode="single" selection="#{wctrl.w}" rowKey="#{flight.wid}" rows="10"
+                                     paginator="true"
+                                     paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                     rowsPerPageTemplate="10,20,50">
+                            <f:facet name="header">
+                                Current Flights
+                            </f:facet>
+                            <p:ajax event="rowSelect" listener="#{wctrl.onRowSelect}" />
+                            <p:column>
+                                <h:outputText value="#{flight.naziv}" />
+                            </p:column>
+                            <p:column headerText="Status">
+                                <h:outputText value="#{flight.status}" />
+                            </p:column>
+                        </p:dataTable>
+                        <p:outputPanel id="testContainer">
+
+                            <p:dataTable id="docId" var="row" value="#{craft}"
+                                         editable="false" widgetVar="documentTable" style="text-align: center">
+
+                                <p:column headerText="Aircraft name" style="width:10%">
+                                    <h:outputText value="#{row.naziv}" title="Name" />
+                                </p:column>
+
+                                <p:column headerText="Type" style="width:10%">
+                                    <h:outputText value="#{row.tipAviona}" title="Type" />
+                                </p:column>
+
+                                <p:column headerText="Image" style="width:30%">
+                                    <o:graphicImage value="#{row.image}" dataURI="true" height="100px"/>
+                                </p:column>
+
+                                <p:column style="width:10%; align-content: center">
+                                    <p:commandButton value="Add to fleet" action="#{wctrl.add(row.id)}"/>
+                                </p:column>
+                            </p:dataTable>
+                        </p:outputPanel>
+                        <br></br>
+                        <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+                        <br></br>
+
+                        <br></br>
+                        <p:commandButton value="Renting" action="#{wctrl.rent}"/>
+                    </center>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

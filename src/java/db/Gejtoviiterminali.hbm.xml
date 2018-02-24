@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Aug 30, 2017 1:08:21 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="db.Gejtoviiterminali" table="gejtoviiterminali" catalog="letovi" optimistic-lock="version">
+        <id name="gejt" type="string">
+            <column name="gejt" length="100" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="aerodromi" class="db.Aerodromi" fetch="select">
+            <column name="IATA" length="100" not-null="true" />
+        </many-to-one>
+        <property name="terminal" type="int">
+            <column name="terminal" not-null="true" />
+        </property>
+        <set name="letovisForArrgejt" table="letovi" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="arrgejt" length="100" not-null="true" />
+            </key>
+            <one-to-many class="db.Letovi" />
+        </set>
+        <set name="letovisForUrggejt" table="letovi" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="urggejt" length="100" />
+            </key>
+            <one-to-many class="db.Letovi" />
+        </set>
+        <set name="letovisForDepgejt" table="letovi" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="depgejt" length="100" not-null="true" />
+            </key>
+            <one-to-many class="db.Letovi" />
+        </set>
+    </class>
+</hibernate-mapping>

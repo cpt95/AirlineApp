@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Aug 30, 2017 1:08:21 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="db.AvioKompanije" table="`avio-kompanije`" catalog="letovi" optimistic-lock="version">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <property name="naziv" type="string">
+            <column name="naziv" length="100" not-null="true" />
+        </property>
+        <property name="adresa" type="string">
+            <column name="adresa" length="100" not-null="true" />
+        </property>
+        <property name="zemlja" type="string">
+            <column name="zemlja" length="100" not-null="true" />
+        </property>
+        <property name="webadresa" type="string">
+            <column name="webadresa" length="100" not-null="true" />
+        </property>
+        <property name="email" type="string">
+            <column name="email" length="100" not-null="true" />
+        </property>
+        <set name="iznajmljivanjes" table="iznajmljivanje" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idKompanije" not-null="true" />
+            </key>
+            <one-to-many class="db.Iznajmljivanje" />
+        </set>
+        <set name="korisnicis" table="korisnici" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="avioKomp" not-null="true" />
+            </key>
+            <one-to-many class="db.Korisnici" />
+        </set>
+        <set name="avionisForIznajmljen" table="avioni" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="iznajmljen" />
+            </key>
+            <one-to-many class="db.Avioni" />
+        </set>
+        <set name="avionisForIdKompanije" table="avioni" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idKompanije" />
+            </key>
+            <one-to-many class="db.Avioni" />
+        </set>
+    </class>
+</hibernate-mapping>

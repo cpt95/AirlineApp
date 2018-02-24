@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Aug 30, 2017 1:08:21 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="db.Aerodromi" table="aerodromi" catalog="letovi" optimistic-lock="version">
+        <id name="iata" type="string">
+            <column name="IATA" length="100" />
+            <generator class="assigned" />
+        </id>
+        <property name="naziv" type="string">
+            <column name="naziv" length="100" not-null="true" />
+        </property>
+        <property name="grad" type="string">
+            <column name="grad" length="100" not-null="true" />
+        </property>
+        <property name="zemlja" type="string">
+            <column name="zemlja" length="100" not-null="true" />
+        </property>
+        <property name="brojPisti" type="int">
+            <column name="brojPisti" not-null="true" />
+        </property>
+        <set name="gejtoviiterminalis" table="gejtoviiterminali" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="IATA" length="100" not-null="true" />
+            </key>
+            <one-to-many class="db.Gejtoviiterminali" />
+        </set>
+    </class>
+</hibernate-mapping>

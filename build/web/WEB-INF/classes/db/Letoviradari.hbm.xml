@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Aug 30, 2017 1:08:21 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="db.Letoviradari" table="letoviradari" catalog="letovi" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <many-to-one name="letovi" class="db.Letovi" fetch="select">
+            <column name="idleta" not-null="true" />
+        </many-to-one>
+        <many-to-one name="radarskicentri" class="db.Radarskicentri" fetch="select">
+            <column name="idradara" not-null="true" />
+        </many-to-one>
+        <property name="brzina" type="java.lang.Double">
+            <column name="brzina" precision="8" />
+        </property>
+        <property name="ostatak" type="java.lang.Double">
+            <column name="ostatak" precision="8" />
+        </property>
+    </class>
+</hibernate-mapping>

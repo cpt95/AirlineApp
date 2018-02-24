@@ -1,0 +1,141 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title>Pilot</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="master.xhtml">
+            <ui:define name="content">
+                
+                    <center>
+                        <h:form rendered="#{not empty next}">
+                            <h:panelGrid columns="1" cellpadding="5" style="margin-bottom:10px; text-align: center">
+                                <h:outputLabel value="Next flight: "/>
+                                <h:outputLabel value="#{next.gejtoviiterminaliByDepgejt.aerodromi.grad} - #{next.gejtoviiterminaliByArrgejt.aerodromi.grad}"/>
+                                <h:outputLabel value="  Planned take - off time: #{next.vremePoletanja}"/>
+                                <p:commandButton value="Take off" action="#{pctrl.tkf(next)}"/>
+                                <p:commandButton value="Cancel this flight" action="#{pctrl.cncl(next)}"/>
+                            </h:panelGrid>
+                        </h:form>
+                        <h:form rendered ="#{not empty active}">
+                            <h:panelGrid columns="1" cellpadding="5" style="display:block; text-align:center">
+                                <h:outputLabel value="Active flight: "/>
+                                <h:outputLabel value="#{active.gejtoviiterminaliByDepgejt.aerodromi.grad} - #{active.gejtoviiterminaliByArrgejt.aerodromi.grad}"/>
+                                <h:outputLabel value="  Planned take - off time: #{active.vremePoletanja}"/>
+                                <p:commandButton value="Emergency landing" action="#{pctrl.emg(active)}"/>
+                                <p:commandButton value="Prepare to land" action="#{pctrl.ptl(active)}"/>
+                                <p:commandButton value="Land" action="#{pctrl.ld(active)}"/>
+                                <p:dataTable id="RadarsDT" var="rad" value="#{activeRR}" style="display:block; text-align:center;">
+                                    <f:facet name="header">
+                                        Radar centers along the way
+                                    </f:facet>
+                                    <p:column headerText="City">
+                                        <h:outputText value="#{rad.grad}"/>
+                                    </p:column>
+                                    <p:column headerText="Country">
+                                        <h:outputText value="#{rad.zemlja}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <p:commandButton value="Update flight parameters" action="#{pctrl.upd(rad)}"/>
+                                    </p:column>
+                                </p:dataTable>
+                            </h:panelGrid>
+                        </h:form>
+                        <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+                            <p:selectOneMenu id="komp" value="#{pctrl.c}" style="width:125px">
+                                <f:selectItem itemLabel="Air Serbia" itemValue="1" />
+                                <f:selectItem itemLabel="Lufthansa" itemValue="2" />
+                                <f:selectItem itemLabel="Qatar Airways" itemValue="3" />
+                                <f:selectItem itemLabel="Air France" itemValue="4" />
+                                <f:selectItem itemLabel="Turkish Airlines" itemValue="5" />
+                                <f:selectItem itemLabel="Etihad Airways" itemValue="6" />
+                            </p:selectOneMenu>
+                            <p:commandButton value="Change company" action="#{pctrl.chg()}"/>
+                        </h:panelGrid>
+                        <p:dataTable id="FlightsDT" style="text-align: center; width: 70%" var="flight" value="#{ff}">
+                            <f:facet name="header">
+                                Near future Flights
+                            </f:facet>
+                            <p:column headerText="Departuring gate">
+                                <h:outputText value="#{flight.gejtoviiterminaliByDepgejt.gejt}" />
+                                <br></br>
+                                <p:commandButton value="Change" action="#{pctrl.change(flight, 1)}"/>
+                            </p:column>
+                            <p:column headerText="Arriving gate">
+                                <h:outputText value="#{flight.gejtoviiterminaliByArrgejt.gejt}" />
+                                <br></br>
+                                <p:commandButton value="Change" action="#{pctrl.change(flight, 2)}"/>
+                            </p:column>
+                            <p:column headerText="Aircraft">
+                                <h:outputText value="#{flight.avioni.naziv}" />
+                            </p:column>
+
+                            <p:column headerText="Duration">
+                                <h:outputText value="#{flight.trajanjeLeta}" />
+                            </p:column>
+                            <p:column headerText="Time of departure">
+                                <h:outputText value="#{flight.vremePoletanja}" />
+                            </p:column>
+
+                            <p:column headerText="Cancel">
+                                <p:commandButton value="Cancel this flight" action="#{pctrl.cncl(flight)}"/>
+                            </p:column>
+                        </p:dataTable>
+
+                    </center>
+                    <p:dialog header="Change gate" widgetVar="gateDialog" modal="false" showEffect="fade" hideEffect="fade" resizable="false" draggable="false">
+                        <h:form id="formY">
+                            <center>
+                                <h:panelGrid columns="1" cellpadding="5">
+                                    <p:outputLabel for="ngt" value="New gate:" />
+                                    <p:selectOneMenu id="ngt" value="#{pctrl.selectG}">
+                                        <f:selectItems value="#{pctrl.listG}"/>
+                                    </p:selectOneMenu>
+                                    <p:commandButton value="Change gate" action="#{pctrl.submit()}"/>
+                                </h:panelGrid>
+                            </center>
+                        </h:form>
+                    </p:dialog>
+                    <p:dialog header="Update flight parameters" widgetVar="updDialog" modal="false" showEffect="fade" hideEffect="fade" resizable="false" draggable="false">
+                        <h:form id="formZ">
+                            <center>
+                                <h:panelGrid columns="1" cellpadding="5">
+                                    <p:outputLabel for="spd" value="Flight speed [km/h]:" />
+                                    <p:inputNumber id="spd" value="#{pctrl.speed}"/>
+                                    <p:outputLabel for="dst" value="Remaining distance [km]:" />
+                                    <p:inputNumber id="dst" value="#{pctrl.dist}"/>
+                                    <p:commandButton value="Update" action="#{pctrl.updF()}"/>
+                                </h:panelGrid>
+                            </center>
+                        </h:form>
+                    </p:dialog>
+                    <p:dialog header="Emergency landing" widgetVar="emgDialog" modal="false" showEffect="fade" hideEffect="fade" resizable="false" draggable="false">
+                        <h:form id="formQ">
+                            <center>
+                                <h:panelGrid columns="1" cellpadding="5">
+                                    <h:outputLabel for="emgl" value="New gate:" />
+                                    <p:selectOneMenu id="emgl" value="#{pctrl.selectE}">
+                                        <f:selectItems value="#{pctrl.listE}"/>
+                                        <p:ajax event="change" update = "emgG" listener="#{pctrl.selEmg(event)}" />
+                                    </p:selectOneMenu>
+                                    <h:outputLabel for="emgG" value="Select departuring gate:" />
+                                    <p:selectOneMenu id="emgG" value="#{pctrl.emgG}" disabled="#{pctrl.emgD}">
+                                        <f:selectItems value="#{pctrl.gejtEmg}"/>
+                                    </p:selectOneMenu>
+
+                                </h:panelGrid>
+                                <p:commandButton value="Submit" action="#{pctrl.emgergency()}"/>
+                            </center>
+                        </h:form>
+                    </p:dialog>
+                
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

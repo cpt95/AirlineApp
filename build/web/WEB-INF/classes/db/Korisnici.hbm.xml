@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Aug 30, 2017 1:08:21 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="db.Korisnici" table="korisnici" catalog="letovi" optimistic-lock="version">
+        <id name="korIme" type="string">
+            <column name="korIme" length="100" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="avioKompanije" class="db.AvioKompanije" fetch="select">
+            <column name="avioKomp" not-null="true" />
+        </many-to-one>
+        <property name="ime" type="string">
+            <column name="Ime" length="100" not-null="true" />
+        </property>
+        <property name="prezime" type="string">
+            <column name="Prezime" length="100" not-null="true" />
+        </property>
+        <property name="email" type="string">
+            <column name="email" length="100" not-null="true" />
+        </property>
+        <property name="lozinka" type="string">
+            <column name="lozinka" length="100" not-null="true" />
+        </property>
+        <property name="pol" type="string">
+            <column name="Pol" length="10" not-null="true" />
+        </property>
+        <property name="pozicija" type="string">
+            <column name="pozicija" length="100" not-null="true" />
+        </property>
+        <property name="prviLogin" type="int">
+            <column name="prviLogin" not-null="true" />
+        </property>
+        <property name="odobreno" type="int">
+            <column name="odobreno" not-null="true" />
+        </property>
+        <property name="datumRodjenja" type="date">
+            <column name="datumRodjenja" length="10" not-null="true" />
+        </property>
+        <set name="licences" table="licence" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idKorisnika" length="100" not-null="true" />
+            </key>
+            <one-to-many class="db.Licence" />
+        </set>
+        <set name="osobljeletas" table="osobljeleta" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="idKorisnika" length="100" not-null="true" />
+            </key>
+            <one-to-many class="db.Osobljeleta" />
+        </set>
+    </class>
+</hibernate-mapping>

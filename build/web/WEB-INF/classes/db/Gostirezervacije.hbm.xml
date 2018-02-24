@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated Aug 30, 2017 1:08:21 PM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="db.Gostirezervacije" table="gostirezervacije" catalog="letovi" optimistic-lock="version">
+        <id name="id" type="java.lang.Integer">
+            <column name="id" />
+            <generator class="identity" />
+        </id>
+        <property name="idLeta" type="int">
+            <column name="idLeta" not-null="true" />
+        </property>
+        <property name="imePrezime" type="string">
+            <column name="ImePrezime" length="100" not-null="true" />
+        </property>
+        <property name="brojPasosa" type="string">
+            <column name="brojPasosa" length="100" not-null="true" />
+        </property>
+        <property name="brojKartice" type="string">
+            <column name="brojKartice" length="100" not-null="true" />
+        </property>
+        <property name="odobreno" type="boolean">
+            <column name="odobreno" not-null="true" />
+        </property>
+        <property name="sifra" type="string">
+            <column name="sifra" length="100" not-null="true" />
+        </property>
+        <property name="odrasli" type="int">
+            <column name="odrasli" not-null="true" />
+        </property>
+    </class>
+</hibernate-mapping>

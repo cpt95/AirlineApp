@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Aircraft</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="master.xhtml">
+            <ui:define name="content">
+                <center>
+                    <h:form id="register_doctor_form" enctype="multipart/form-data">
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <h:outputLabel for="nameA" value="Name:" />
+                            <p:inputText id="nameA" value="#{adctrl.nameA}"/>
+                            <h:outputLabel for="licA" value="Aircraft licence:" />
+                            <p:inputText id="licA" value="#{adctrl.licA}"/>
+                            <h:outputLabel for="maxP" value="Capacity:" />
+                            <p:inputNumber id="maxP" value="#{adctrl.cap}"/> 
+                            <h:outputLabel for="manu" value="Select manufacturer:" />
+                            <p:selectOneMenu id="manu" value="#{adctrl.mm}">
+                                <f:selectItems value="#{adctrl.m}"/>
+                            </p:selectOneMenu>
+                            <h:outputLabel for="type" value="Select type:"/>
+                            <p:selectOneMenu id="type" value="#{adctrl.typ}">
+                                <f:selectItems value="#{adctrl.types}"/>
+                            </p:selectOneMenu>
+
+                            <p:commandButton value="Submit" ajax="false" action="#{adctrl.submit4}"/>
+                        </h:panelGrid>
+                        <p:fileUpload mode="simple" value="#{adctrl.img}" skinSimple="true"
+                                      sizeLimit="100000" fileLimit="3" allowTypes="/(\.|\/)(jpe?g|png)$/" />
+                    </h:form>
+                </center>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

@@ -1,0 +1,129 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>Welcome</title>
+
+    </h:head>
+    <h:body>
+        <ui:composition template="master.xhtml">
+            <ui:define name="content">
+                <center>
+                    <h:form id="formX">
+                        <p:remoteCommand name="onload" action="#{cntrl.onload}" autoRun="true" />
+                        <br></br>
+                        <h:outputText id="error" style ="color: red" value="#{cntrl.errormsg}"/>
+                        <h:panelGrid columns="2" cellpadding="5">
+
+                            <h:outputLabel for="username" value="Username:" />
+                            <p:inputText id="username" value="#{cntrl.usr}" label="username" />
+
+                            <h:outputLabel for="password" value="Password:" />
+                            <p:password id="password" value="#{cntrl.pass}" label="password" />
+
+                            <p:outputLabel for="console" value="Tip korisnika: " />
+                            <p:selectOneMenu id="console" value="#{cntrl.tip}" style="width:155px">
+                                <f:selectItem itemLabel="Pilot" itemValue="pi" />
+                                <f:selectItem itemLabel="Stjuardesa" itemValue="st" />
+                                <f:selectItem itemLabel="Administrator" itemValue="ad" />
+                                <f:selectItem itemLabel="Radnik u avio-kompaniji" itemValue="rd" />
+                            </p:selectOneMenu>
+
+                            <p:commandButton value="Login" action="#{cntrl.logIn()}" style="width:163px"/>
+                            <p:commandButton value="Skip" action="#{cntrl.skip()}" style="width:189px"/>
+                            <p:commandButton value="Change Password" action="#{cntrl.chngPswd()}"/>
+                            <p:commandButton value="Sign Up" onclick="PF('regDialog').show()" style="width:189px"/>
+
+                        </h:panelGrid>
+                        <br></br>
+                        <br></br>
+                        <h:form id="formY">
+                            <p:dataTable id="Flights1DT" var="flight" value="#{cntrl.letovi}" style="width: 30%">
+                                <f:facet name="header">
+                                    Flights
+                                </f:facet>
+                                <p:column style="text-align: center">
+                                    <h:outputText value="#{flight.naziv}" />
+                                </p:column>
+                            </p:dataTable>
+                        </h:form>
+                        <p:dialog header="Change password" widgetVar="passDialog" modal="false" showEffect="fade" hideEffect="fade" resizable="false" draggable="false">
+                            <h:form>
+                                <center>
+                                    <h:panelGrid columns="1" cellpadding="5">
+                                        <p:outputLabel for="username" value="New password:" />
+                                        <p:inputText id="username" value="#{cntrl.newPass}" label="newpass" />
+                                        <p:commandButton value="Change Password" action="#{cntrl.chgPass()}"/>
+                                    </h:panelGrid>
+                                </center>
+                            </h:form>
+                        </p:dialog>
+                        </h:form>
+                        <p:dialog header="Register" widgetVar="regDialog" modal="false" showEffect="fade" hideEffect="fade" resizable="false" draggable="false">
+                            <h:form id="forma">
+
+                                <h:panelGrid id="grid" columns="2" cellpadding="5">
+                                    <h:outputLabel for="name" value="Name:" />
+                                    <p:inputText id="name" value="#{reg.name}" label="name" />
+                                    <h:outputLabel for="surname" value="Surname:" />
+                                    <p:inputText id="surname" value="#{reg.sname}" label="surname" />
+                                    <h:outputLabel for="sex" value="Sex:" />
+                                    <p:inputText id="sex" value="#{reg.sex}" label="sex" />
+
+                                    <h:outputLabel for="date" value="Date"/>                 
+                                    <p:inputText id="date" value="#{reg.birth}" label="Date" validator="ageValidator">
+                                        <f:convertDateTime pattern="dd.MM.yyyy" />
+                                        <f:ajax event="blur" render="dateError"/>
+                                    </p:inputText>
+
+                                    <h:outputLabel for="email" value="E-mail:" />
+                                    <p:inputText id="email" value="#{reg.email}" label="email" />
+
+                                    <p:outputLabel for="komp" value="Airliner: " />
+                                    <p:selectOneMenu id="komp" value="#{reg.komp}" style="width:125px">
+                                        <f:selectItem itemLabel="Air Serbia" itemValue="1" />
+                                        <f:selectItem itemLabel="Lufthansa" itemValue="2" />
+                                        <f:selectItem itemLabel="Qatar Airways" itemValue="3" />
+                                        <f:selectItem itemLabel="Air France" itemValue="4" />
+                                        <f:selectItem itemLabel="Turkish Airlines" itemValue="5" />
+                                        <f:selectItem itemLabel="Etihad Airways" itemValue="6" />
+                                    </p:selectOneMenu>
+
+                                    <p:outputLabel for="pos" value="Position: " />
+                                    <p:selectOneMenu id="pos" value="#{reg.pos}" style="width:125px">
+                                        <f:selectItem itemLabel="Pilot" itemValue="pilot" />
+                                        <f:selectItem itemLabel="Flight attendant" itemValue="stjuardesa" />
+                                        <f:selectItem itemLabel="Worker" itemValue="radnik" />
+                                    </p:selectOneMenu>
+
+                                    <h:outputLabel for="usr" value="Username" />
+                                    <p:inputText id="usr" value="#{reg.usr}" label="username" validator="usrValidator">
+                                        <f:ajax event="blur" render="usrError"/>
+                                    </p:inputText>
+
+                                    <h:outputLabel for="pass" value="Password:" />
+                                    <p:inputText id="pass" value="#{reg.pass}" label="Password" validator="passValidator">
+                                        <f:ajax event="blur" render="passError"/>
+                                    </p:inputText>
+
+                                    <h:outputLabel for="cpass" value="Confirm password:" />
+                                    <p:inputText id="cpass" value="#{reg.cpass}" label="conpassword" />
+
+                                    <p:commandButton value="Register" action="#{reg.register()}"/>
+                                </h:panelGrid>
+                                <h:message id="passError" style="color:red" for="pass" />
+                                <h:message id="dateError" style="color:red" for="usr"/>
+                                <h:message id="usrError" style="color:red" for="date"/>
+                            </h:form>
+                        </p:dialog>
+                    
+                </center>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+

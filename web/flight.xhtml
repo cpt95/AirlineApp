@@ -1,0 +1,48 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Add flight</title>
+    </h:head>
+    <h:body>
+        <ui:composition template="master.xhtml">
+            <ui:define name="content">
+                <center>
+                    <h:form id="formX">
+                        <h:panelGrid columns="2" cellpadding="5">
+                            <h:outputLabel for="dep" value="Select departuring airport:"/>
+                            <p:selectOneMenu id="dep" value="#{adctrl.depA}">
+                                <f:selectItems value="#{adctrl.airports}"/>
+                                <p:ajax event="change" listener="#{adctrl.selDep(event)}" />
+                            </p:selectOneMenu>
+                            <h:outputLabel for="depG" value="Select departuring gate:" />
+                            <p:selectOneMenu id="depG" value="#{adctrl.depG}" disabled="#{adctrl.depD}">
+                                <f:selectItems value="#{adctrl.gejtDep}"/>
+                            </p:selectOneMenu>
+                            <h:outputLabel for="arr" value="Select arriving airport:"/>
+                            <p:selectOneMenu id="arr" value="#{adctrl.arrA}">
+                                <f:selectItems value="#{adctrl.airports}"/>
+                                <p:ajax event="change" listener="#{adctrl.selArr(event)}" />
+                            </p:selectOneMenu>
+                            <h:outputLabel for="arrG" value="Select arriving gate:"/>
+                            <p:selectOneMenu id="arrG" value="#{adctrl.arrG}" disabled="#{adctrl.arrD}">
+                                <f:selectItems value="#{adctrl.gejtArr}"/>
+                            </p:selectOneMenu>
+                            <p:outputLabel for="datetime" value="Date and time of departure:" />
+                            <p:calendar id="datetime" value="#{adctrl.dtD}" pattern="MM/dd/yyyy HH:mm:ss" />
+                            <h:outputLabel for="char" value="Charter: " />
+                            <p:selectBooleanButton id="char" value="#{adctrl.ch}" onLabel="Yes" offLabel="No" onIcon="ui-icon-check" offIcon="ui-icon-close" style="width:70px"/>
+                        </h:panelGrid>
+                        <br></br>
+                        <p:commandButton value="Further details" action="#{adctrl.next}"/>
+                    </h:form>
+                </center>
+            </ui:define>
+        </ui:composition>
+    </h:body>
+</html>
+
